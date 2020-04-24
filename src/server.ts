@@ -3,6 +3,8 @@ import { Application, Request, Response } from 'express';
 
 import * as bodyParser from 'body-parser';
 
+import { handler } from '.';
+
 function getPort(): number
 {
     const p = parseInt(process.env.PORT as string);
@@ -18,9 +20,11 @@ const port = getPort();
 app.use(bodyParser.json());
 
 app.post('/', async (req: Request, res: Response): Promise<void> => {
-    console.log(JSON.stringify(req.headers));
-    console.log(JSON.stringify(req.body));
-    res.sendStatus(200);
+    const body = JSON.stringify(req.body);
+
+    // @ts-ignore
+    const content = await handler({ body }, {});
+    res.json(content);
 });
 
 app.listen(port, '0.0.0.0', (): void => {
