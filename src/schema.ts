@@ -11,21 +11,20 @@ const githubPushWebhookSchema = {
         /* git repository information */
         repository: {
             type: 'object',
-            required: ['id', 'url', 'name', 'description', 'owner'],
+            required: ['id', 'url', 'name', 'owner'],
             properties: {
                 id: { type: 'number' },
                 url: { type: 'string' },
                 name: { type: 'string' },
-                description: { type: ['string', 'null'] },
 
                 /* repository's owner information */
                 owner: {
                     type: 'object',
-                    required: ['id', 'name', 'email', 'avatar_url'],
+                    required: ['id', 'login', 'html_url', 'avatar_url'],
                     properties: {
                         id: { type: 'number' },
-                        name: { type: 'string' },
-                        email: { type: 'string' },
+                        login: { type: 'string' },
+                        html_url: { type: 'string' },
                         avatar_url: { type: 'string' },
                     }
                 },
@@ -47,31 +46,12 @@ const githubPushWebhookSchema = {
         /* information about the commit that triggered the webhook */
         head_commit: {
             type: 'object',
-            required: ['id', 'url', 'message', 'timestamp', 'added', 'removed', 'modified', 'author'],
+            required: ['id', 'url', 'message', 'timestamp'],
             properties: {
                 id: { type: 'string' },
                 url: { type: 'string' },
                 message: { type: 'string' },
                 timestamp: { type: 'string' },
-
-                /* added files on the commit */
-                added: { type: 'array', items: { type: 'string' } },
-
-                /* removed files on the commit */
-                removed: { type: 'array', items: { type: 'string' } },
-
-                /* modified files on the commit */
-                modified: { type: 'array', items: { type: 'string' } },
-
-                /* commit's author information */
-                author: {
-                    type: 'object',
-                    required: ['name', 'email'],
-                    properties: {
-                        name: { type: 'string' },
-                        email: { type: 'string' },
-                    },
-                },
             },
         },
     },
