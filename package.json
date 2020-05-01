@@ -1,6 +1,6 @@
 {
-  "name": "tiny-ci-api",
-  "version": "1.0.0",
+  "name": "tiny-ci-github-integration",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
