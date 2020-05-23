@@ -1,9 +1,8 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from 'aws-lambda';
+import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda';
 
+import { GithubWebhookSchemaValidator } from './schema/githubWebhook';
+import logger from './lib/logger';
 import parseWebhookBody from './parser';
-import logger from './logger';
-
-import { GithubWebhookSchemaValidator } from './schema';
 
 const log = logger({ isDebug: true });
 
@@ -12,8 +11,7 @@ function response(statusCode: number): APIGatewayProxyResult
     return { body: '', statusCode };
 }
 
-// @ts-ignore
-export async function handler(event: APIGatewayProxyEvent, context: Context): Promise<APIGatewayProxyResult>
+export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult>
 {
     let body: any = null;
     try {
