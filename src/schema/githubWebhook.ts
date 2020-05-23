@@ -1,4 +1,4 @@
-import { Validator, Schema, ValidationError } from 'jsonschema';
+import { GenericSchemaValidator, Schema } from './generic';
 
 /* eslint-disable @typescript-eslint/camelcase */
 const githubPushWebhookSchema = {
@@ -58,29 +58,7 @@ const githubPushWebhookSchema = {
 };
 /* eslint-enable */
 
-const validator = new Validator();
-
-abstract class GenericSchema
-{
-    private valid: boolean;
-    private errors: string[];
-
-    public constructor(data: any)
-    {
-        const result = validator.validate(data, this.getValidationSchema());
-
-        this.valid  = result.valid;
-        this.errors = result.errors.map((err: ValidationError): string => {
-            return err.message;
-        });
-    }
-
-    protected abstract getValidationSchema(): Schema;
-    public isValid(): boolean { return this.valid; }
-    public getErrors(): string[] { return this.errors; }
-}
-
-export class GithubWebhookSchemaValidator extends GenericSchema
+export class GithubWebhookSchemaValidator extends GenericSchemaValidator
 {
     protected getValidationSchema(): Schema { return githubPushWebhookSchema; }
 }
