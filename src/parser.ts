@@ -1,4 +1,4 @@
-import { RefType, INewJobPayload } from './types';
+import { RefType, INewJobPayload } from '../lib/types';
 
 export default function parseWebhookBody(body: any): INewJobPayload
 {
