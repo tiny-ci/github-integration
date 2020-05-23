@@ -1,3 +1,8 @@
+export interface IHash
+{
+    [key: string]: any;
+}
+
 export enum RefType
 {
     Branch = 'branch',
