@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/tiny-ci/github-integration"
   },
   "author": "Caian R. Ertl <hi@caian.org>",
   "license": "ISC",
