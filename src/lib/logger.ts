@@ -44,12 +44,10 @@ function emit(isDebug: boolean, crit: Criticality, msg: string, err?: Error): vo
         log(`${line}: ${err.message}`);
 }
 
-const logger = (config: { isDebug: boolean }): IEmit => {
+export const logger = (config: { isDebug: boolean }): IEmit => {
     return {
         info:  (msg: string, err?: Error): void => { emit(config.isDebug, Criticality.Info, msg, err); },
         warn:  (msg: string, err?: Error): void => { emit(config.isDebug, Criticality.Warn, msg, err); },
         error: (msg: string, err?: Error): void => { emit(config.isDebug, Criticality.Error, msg, err); },
     };
 };
-
-export default logger;
