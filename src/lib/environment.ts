@@ -2,7 +2,8 @@ import { IHash } from './types';
 
 export enum RequiredEnv
 {
-    TinyCIApiFunctionName  = 'TINY_CI_API_FUNCTION_NAME',
+    TinyCIApiFunctionName = 'TINY_CI_API_FUNCTION_NAME',
+    IsDebug = 'IS_DEBUG',
 }
 
 type SupportedDataTypes = string | string[] | number | boolean;
@@ -30,6 +31,7 @@ export class Environment
     {
         this.envs = this.fetch([
             this.addEnv(RequiredEnv.TinyCIApiFunctionName, EnvDataType.String),
+            this.addEnv(RequiredEnv.IsDebug, EnvDataType.String, false),
         ]);
     }
 
