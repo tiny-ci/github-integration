@@ -9,7 +9,7 @@ export enum RefType
     Tag = 'tag',
 }
 
-export interface INewJobPayload
+export interface IPushEvent
 {
     commit: {
         hash: string;
