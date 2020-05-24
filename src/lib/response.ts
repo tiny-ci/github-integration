@@ -1,3 +1,5 @@
+import { APIGatewayProxyResult } from 'aws-lambda';
+
 export enum ExErr
 {
     UnparsableEventBody = 'could not parse event body',
