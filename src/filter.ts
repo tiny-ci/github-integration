@@ -1,6 +1,6 @@
-import { RefType, INewJobPayload } from '../lib/types';
+import { RefType, IPushEvent } from './lib/types';
 
-export default function parseWebhookBody(body: any): INewJobPayload
+export function filterWebhookBody(body: any): IPushEvent
 {
     const owner  = body.repository.owner;
     const commit = body.head_commit;
