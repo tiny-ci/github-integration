@@ -2,7 +2,7 @@ import { IHash } from './types';
 
 export enum RequiredEnv
 {
-    TinyCIApiFunctionName = 'TINY_CI_API_FUNCTION_NAME',
+    TinyCIApiFunctionName = 'TINYCI_API_FUNCTION_NAME',
     IsDebug = 'IS_DEBUG',
 }
 
@@ -10,10 +10,10 @@ type SupportedDataTypes = string | string[] | number | boolean;
 
 enum EnvDataType
 {
-    Boolean,
-    String,
-    Number,
-    List,
+    Boolean = 'boolean',
+    String  = 'string',
+    Number  = 'number',
+    List    = 'list',
 }
 
 interface IRequiredEnvironmentVariable
@@ -48,7 +48,10 @@ export class Environment
                 return data;
 
             case EnvDataType.Number:
-                try { return parseInt(data); } catch (e) { return null; }
+                if (isNaN(parseInt(data)))
+                    return null;
+
+                return parseInt(data);
 
             case EnvDataType.List:
                 try { return data.split(','); } catch (e) { return null; }
