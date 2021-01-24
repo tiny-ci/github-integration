@@ -6,14 +6,23 @@
   "scripts": {
     "start": "",
     "build": "tsc -p tsconfig.json",
-    "lint": "eslint --format=codeframe '**/*.ts'"
+    "prettify": "prettier --no-semi --print-width 100 --single-quote --trailing-comma none --write './src/**/**/**/*.ts'",
+    "standard": "standardx --fix ./src/**/*.ts",
+    "beautify": "npm run prettify && npm run standard",
+    "lint": "standardx"
   },
+  "author": "Caian R. Ertl <hi@caian.org>",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/tiny-ci/github-integration"
   },
-  "author": "Caian R. Ertl <hi@caian.org>",
-  "license": "ISC",
+  "standardx": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint/eslint-plugin"
+    ]
+  },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.71",
     "@types/node": "^14.14.22",
