@@ -1,7 +1,7 @@
 enum Criticality
 {
-    Info = 'info',
-    Warn = 'warn',
+    Info  = 'info',
+    Warn  = 'warn',
     Error = 'error',
 }
 
@@ -24,16 +24,16 @@ function emit(isDebug: boolean, crit: Criticality, msg: string, err?: Error): vo
         return month.toString();
     })();
 
-    const datef = now.getFullYear() + '-' + monf + '-' + now.getDate();
-    const timef = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
-    const ts    = `${datef} ${timef}`;
+    const datef = `${now.getFullYear()}-${monf}-${now.getDate()}`;
+    const timef = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 
+    const ts   = `${datef} ${timef}`;
     const line = `${ts} ${crit}`;
 
     const log = ((): Function => {
         switch (crit) {
-            case Criticality.Info: return console.log;
-            case Criticality.Warn: return console.warn;
+            case Criticality.Info:  return console.log;
+            case Criticality.Warn:  return console.warn;
             case Criticality.Error: return console.error;
         }
     })();
