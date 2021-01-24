@@ -78,7 +78,18 @@ export class Environment {
 
       if (typeof value === 'undefined' || value === '') {
         if (optional) {
-          envValues[envName] = ''
+          envValues[envName] = ((): SupportedDataTypes => {
+            switch (envType) {
+              case EnvDataType.String:
+                return ''
+              case EnvDataType.Boolean:
+                return false
+              case EnvDataType.List:
+                return []
+              case EnvDataType.Number:
+                return 0
+            }
+          })()
         } else {
           missing.push(envName)
         }
@@ -88,7 +99,9 @@ export class Environment {
 
       envValues[envName] = ((): SupportedDataTypes => {
         const val = this.parseData(envType, value)
-        if (val === null) { throw new Error(`environment variable ${envName} is not of type ${envType}`) }
+        if (val === null) {
+          throw new Error(`environment variable ${envName} is not of type ${envType}`)
+        }
 
         return val
       })()
@@ -105,7 +118,7 @@ export class Environment {
 
   public get (name: string): SupportedDataTypes {
     const env = this.envs[name]
-    if (typeof env === undefined) throw new Error(`unknown environment variable ${name}`)
+    if (typeof env === 'undefined') throw new Error(`unknown environment variable ${name}`)
 
     return env
   }
