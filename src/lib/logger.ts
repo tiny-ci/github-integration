@@ -38,7 +38,7 @@ function emit (isDebug: boolean, crit: Criticality, msg: string, err?: Error): v
 
   log(`${line}: ${msg}`)
 
-  if (err) log(`${line}: ${err.message}`)
+  if (typeof err !== 'undefined') log(`${line}: ${err.message}`)
 }
 
 export const logger = (config: { isDebug: boolean }): IEmit => {

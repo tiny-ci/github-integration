@@ -1,6 +1,6 @@
-import { RefType, IPushEvent } from './lib/types'
+import { RefType, IPushEvent, IHash } from './lib/types'
 
-export function filterWebhookBody(body: any): IPushEvent {
+export function filterWebhookBody (body: IHash): IPushEvent {
   const owner = body.repository.owner
   const commit = body.head_commit
 
@@ -15,7 +15,7 @@ export function filterWebhookBody(body: any): IPushEvent {
       case 'tags':
         return RefType.Tag
       default:
-        throw new Error(`unknown ref type; got: ${body.ref}`)
+        throw new Error(`unknown ref type; got: ${body.ref as string}`)
     }
   })()
 

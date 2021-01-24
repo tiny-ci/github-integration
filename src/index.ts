@@ -7,7 +7,7 @@ import { Environment, RequiredEnv } from './lib/environment'
 import { response, ExErr } from './lib/response'
 import { filterWebhookBody } from './filter'
 
-export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+export async function handler (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   const environment = new Environment()
   const isDebug = Boolean(environment.get(RequiredEnv.IsDebug))
   const log = logger({ isDebug })

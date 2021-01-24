@@ -1,6 +1,5 @@
 import { GenericSchemaValidator, Schema } from './generic'
 
-/* eslint-disable @typescript-eslint/camelcase */
 const githubPushWebhookSchema = {
   type: 'object',
   required: ['ref', 'compare', 'repository', 'sender', 'head_commit'],
