@@ -1,115 +1,112 @@
-import { IHash } from './types';
+import { IHash } from './types'
 
-export enum RequiredEnv
-{
-    TinyCIApiFunctionName = 'TINYCI_API_FUNCTION_NAME',
-    IsDebug = 'IS_DEBUG',
+export enum RequiredEnv {
+  TinyCIApiFunctionName = 'TINYCI_API_FUNCTION_NAME',
+  IsDebug = 'IS_DEBUG'
 }
 
-type SupportedDataTypes = string | string[] | number | boolean;
+type SupportedDataTypes = string | string[] | number | boolean
 
-enum EnvDataType
-{
-    Boolean = 'boolean',
-    String  = 'string',
-    Number  = 'number',
-    List    = 'list',
+enum EnvDataType {
+  Boolean = 'boolean',
+  String = 'string',
+  Number = 'number',
+  List = 'list'
 }
 
-interface IRequiredEnvironmentVariable
-{
-    name: string;
-    type: EnvDataType;
-    optional?: boolean;
+interface IRequiredEnvironmentVariable {
+  name: string
+  type: EnvDataType
+  optional?: boolean
 }
 
-export class Environment
-{
-    private envs: IHash;
+export class Environment {
+  private readonly envs: IHash
 
-    public constructor()
-    {
-        this.envs = this.fetch([
-            this.addEnv(RequiredEnv.TinyCIApiFunctionName, EnvDataType.String),
-            this.addEnv(RequiredEnv.IsDebug, EnvDataType.String, false),
-        ]);
-    }
+  public constructor () {
+    this.envs = this.fetch([
+      this.addEnv(RequiredEnv.TinyCIApiFunctionName, EnvDataType.String),
+      this.addEnv(RequiredEnv.IsDebug, EnvDataType.String, false)
+    ])
+  }
 
-    private addEnv(name: string, type: EnvDataType, optional?: boolean): IRequiredEnvironmentVariable
-    {
-        return { name, type, optional };
-    }
+  private addEnv (
+    name: string,
+    type: EnvDataType,
+    optional?: boolean
+  ): IRequiredEnvironmentVariable {
+    return { name, type, optional }
+  }
 
-    private parseData(type: EnvDataType, data: string): SupportedDataTypes | null
-    {
-        const d = data.toLowerCase();
-        switch (type) {
-            case EnvDataType.String:
-                return data;
+  private parseData (type: EnvDataType, data: string): SupportedDataTypes | null {
+    const d = data.toLowerCase()
+    switch (type) {
+      case EnvDataType.String:
+        return data
 
-            case EnvDataType.Number:
-                if (isNaN(parseInt(data)))
-                    return null;
+      case EnvDataType.Number:
+        if (isNaN(parseInt(data))) return null
 
-                return parseInt(data);
+        return parseInt(data)
 
-            case EnvDataType.List:
-                try { return data.split(','); } catch (e) { return null; }
-
-            case EnvDataType.Boolean:
-                if (d === 'true') return true;
-                if (d === 'false') return false;
-                return null;
-
-            default:
-                return null;
-        }
-    }
-
-    private fetch(envs: IRequiredEnvironmentVariable[]): IHash
-    {
-        const envValues: IHash = {};
-        const missing: string[] = [];
-
-        for (let i = 0; i < envs.length; i++) {
-            const optional = Boolean(envs[i].optional);
-            const envName  = envs[i].name;
-            const envType  = envs[i].type;
-            const value    = process.env[envName];
-
-            if (typeof(value) === 'undefined' || value === '') {
-                if (optional) {
-                    envValues[envName] = '';
-                }
-                else {
-                    missing.push(envName);
-                }
-
-                continue;
-            }
-
-            envValues[envName] = ((): SupportedDataTypes => {
-                const val = this.parseData(envType, value);
-                if (val === null)
-                    throw new Error(`environment variable ${envName} is not of type ${envType}`);
-
-                return val as SupportedDataTypes;
-            })();
+      case EnvDataType.List:
+        try {
+          return data.split(',')
+        } catch (e) {
+          return null
         }
 
-        if (missing.length > 0) {
-            throw new Error(`the following required environment variables are missing: ${missing.join(', ')}`);
+      case EnvDataType.Boolean:
+        if (d === 'true') return true
+        if (d === 'false') return false
+        return null
+
+      default:
+        return null
+    }
+  }
+
+  private fetch (envs: IRequiredEnvironmentVariable[]): IHash {
+    const envValues: IHash = {}
+    const missing: string[] = []
+
+    for (let i = 0; i < envs.length; i++) {
+      const optional = Boolean(envs[i].optional)
+      const envName = envs[i].name
+      const envType = envs[i].type
+      const value = process.env[envName]
+
+      if (typeof value === 'undefined' || value === '') {
+        if (optional) {
+          envValues[envName] = ''
+        } else {
+          missing.push(envName)
         }
 
-        return envValues;
+        continue
+      }
+
+      envValues[envName] = ((): SupportedDataTypes => {
+        const val = this.parseData(envType, value)
+        if (val === null) { throw new Error(`environment variable ${envName} is not of type ${envType}`) }
+
+        return val
+      })()
     }
 
-    public get(name: string): SupportedDataTypes
-    {
-        const env = this.envs[name];
-        if (typeof(env) === undefined)
-            throw new Error(`unknown environment variable ${name}`);
-
-        return env;
+    if (missing.length > 0) {
+      throw new Error(
+        `the following required environment variables are missing: ${missing.join(', ')}`
+      )
     }
+
+    return envValues
+  }
+
+  public get (name: string): SupportedDataTypes {
+    const env = this.envs[name]
+    if (typeof env === undefined) throw new Error(`unknown environment variable ${name}`)
+
+    return env
+  }
 }

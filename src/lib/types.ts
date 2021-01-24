@@ -1,50 +1,47 @@
-export interface IHash
-{
-    [key: string]: any;
+export interface IHash {
+  [key: string]: any
 }
 
-export enum RefType
-{
-    Branch = 'branch',
-    Tag = 'tag',
+export enum RefType {
+  Branch = 'branch',
+  Tag = 'tag'
 }
 
-export interface IPushEvent
-{
-    commit: {
-        hash: string;
-        ts: string;
-        message: string;
-        ref: {
-            type: RefType;
-            name: string;
-        };
-        web: {
-            url: string;
-            compare: string;
-        };
-    };
-    repository: {
-        id: string;
-        name: string;
-        web: {
-            url: string;
-        };
-    };
-    sender: {
-        id: string;
-        login: string;
-        web: {
-            url: string;
-            avatar: string;
-        };
-    };
-    owner: {
-        id: string;
-        login: string;
-        web: {
-            url: string;
-            avatar: string;
-        };
-    };
+export interface IPushEvent {
+  commit: {
+    hash: string
+    ts: string
+    message: string
+    ref: {
+      type: RefType
+      name: string
+    }
+    web: {
+      url: string
+      compare: string
+    }
+  }
+  repository: {
+    id: string
+    name: string
+    web: {
+      url: string
+    }
+  }
+  sender: {
+    id: string
+    login: string
+    web: {
+      url: string
+      avatar: string
+    }
+  }
+  owner: {
+    id: string
+    login: string
+    web: {
+      url: string
+      avatar: string
+    }
+  }
 }

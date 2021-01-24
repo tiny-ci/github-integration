@@ -1,24 +1,27 @@
-import { Validator, ValidationError, Schema } from 'jsonschema';
-export { Schema } from 'jsonschema';
+import { Validator, ValidationError, Schema } from 'jsonschema'
+export { Schema } from 'jsonschema'
 
-const validator = new Validator();
+const validator = new Validator()
 
-export abstract class GenericSchemaValidator
-{
-    private valid: boolean;
-    private errors: string[];
+export abstract class GenericSchemaValidator {
+  private readonly valid: boolean
+  private readonly errors: string[]
 
-    public constructor(data: any)
-    {
-        const result = validator.validate(data, this.getValidationSchema());
+  public constructor (data: any) {
+    const result = validator.validate(data, this.getValidationSchema())
 
-        this.valid  = result.valid;
-        this.errors = result.errors.map((err: ValidationError): string => {
-            return err.message;
-        });
-    }
+    this.valid = result.valid
+    this.errors = result.errors.map((err: ValidationError): string => {
+      return err.message
+    })
+  }
 
-    protected abstract getValidationSchema(): Schema;
-    public isValid(): boolean { return this.valid; }
-    public getErrors(): string[] { return this.errors; }
+  protected abstract getValidationSchema (): Schema
+  public isValid (): boolean {
+    return this.valid
+  }
+
+  public getErrors (): string[] {
+    return this.errors
+  }
 }
