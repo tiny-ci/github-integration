@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
     "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
@@ -12,6 +12,7 @@
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "webpack.config.ts"
   ]
 }
