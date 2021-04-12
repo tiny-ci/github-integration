@@ -55,7 +55,6 @@ const githubPushWebhookSchema = {
     }
   }
 }
-/* eslint-enable */
 
 export class GithubWebhookSchemaValidator extends GenericSchemaValidator {
   protected getValidationSchema (): Schema {
